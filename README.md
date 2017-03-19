@@ -1,4 +1,9 @@
 # react-rendered-size
+
+<img src="https://img.shields.io/badge/build-passing-brightgreen.svg"/>
+<img src="https://img.shields.io/badge/coverage-100%25-brightgreen.svg"/>
+<img src="https://img.shields.io/badge/license-MIT-blue.svg"/>
+
 Get the rendered size of a React element without needing to render it
 
 ## Table of contents
@@ -14,11 +19,11 @@ Get the rendered size of a React element without needing to render it
 
 ## What it is
 
-This will render a `ReactElement` inside a dummy container outside of the window so that the rendered `height` and `width` (based on the `width` passed) can be calculated. This most common use case for this is for virtually rendered elements (such as items in [react-virtualized](https://github.com/bvaughn/react-virtualized)) that are dynamically-sized but also need to have their size calculated prior to being rendered on-screen.
+This will render a `ReactElement` inside a dummy container outside of the window so that the rendered `height` and `width` (based on the `width` passed) can be calculated. This most common use case for this is for virtually rendered elements (such as items in [react-virtualized](https://github.com/bvaughn/react-virtualized)) that have dynamic size due to content but also need to have their size calculated prior to being rendered on-screen.
 
 ## What it isn't
 
-Magical. This will not give you a DOM when there is one, nor will it calculate the height of items that are considered `display: none;`. It also doesn't make the DOM magically faster, so use sparingly.
+Magical. This will not give you a DOM when there isn't one, nor will it calculate the height of items that are `display: none;`. It also doesn't make the DOM magically faster, so use sparingly to avoid performance implications.
 
 ## Usage
 
