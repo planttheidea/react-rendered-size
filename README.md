@@ -1,15 +1,26 @@
 # react-rendered-size
 Get the rendered size of a React element without needing to render it
 
-### What it is
+## Table of contents
+* [What it is](#what-it-is)
+* [What it isn't](#what-it-isnt)
+* [Usage](#usage)
+* [API](#api)
+  * [getRenderedSize](#getrenderedsizereactelement-containerwidth-containeroptions)
+  * [getRenderedHeight](#getrenderedsizereactelement-containerwidth-containeroptions)
+  * [getRenderedWidth](#getrenderedsizereactelement-containerwidth-containeroptions)
+* [Browser support](#browser-support)
+* [Development](#development)
+
+## What it is
 
 This will render a `ReactElement` inside a dummy container outside of the window so that the rendered `height` and `width` (based on the `width` passed) can be calculated. This most common use case for this is for virtually rendered elements (such as items in [react-virtualized](https://github.com/bvaughn/react-virtualized)) that are dynamically-sized but also need to have their size calculated prior to being rendered on-screen.
 
-### What it isn't
+## What it isn't
 
-Magical. This will not give you a DOM when there is one, nor will it calculate the height of items that are considered `display: none;`.
+Magical. This will not give you a DOM when there is one, nor will it calculate the height of items that are considered `display: none;`. It also doesn't make the DOM magically faster, so use sparingly.
 
-### Usage
+## Usage
 
 ```javascript
 import React, {
@@ -51,11 +62,11 @@ class App extends Component {
 }
 ```
 
-### API
+## API
 
 All methods below are available as named exports, and the default export is `getRenderedSize`.
 
-*getRenderedSize(reactElement[, containerWidth[, containerOptions]])*
+#### getRenderedSize(reactElement[, containerWidth[, containerOptions]])
 
 Function to retrieve the size of the `reactElement` passed. You can also optionally pass a `containerWidth` (defaults to the document's width), and pass additional options specific to the container. The `containerOptions` shape:
 
@@ -82,15 +93,15 @@ Returns an object which contains the calculated size values for the given `react
 }
 ```
 
-*getRenderedHeight(reactElement[, containerWidth[, containerOptions]])*
+#### getRenderedHeight(reactElement[, containerWidth[, containerOptions]])
 
 Convenience function that will only retreive the `height` that is returned from `getRenderedSize`. All parameters are the same as `getRenderedSize`.
 
-*getRenderedWidth(reactElement[, containerWidth[, containerOptions]])*
+#### getRenderedWidth(reactElement[, containerWidth[, containerOptions]])
 
 Convenience function that will only retreive the `width` that is returned from `getRenderedSize`. All parameters are the same as `getRenderedSize`.
 
-### Browser support
+## Browser support
 
 * Chrome (all versions)
 * Firefox (all versions)
@@ -99,7 +110,7 @@ Convenience function that will only retreive the `width` that is returned from `
 * IE 9+
 * Safari 6+
 
-### Development
+## Development
 
 Standard stuff, clone the repo and `npm install` dependencies. The npm scripts available:
 * `dev` => run webpack dev server to run example app (playground!)
