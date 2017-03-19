@@ -19,7 +19,7 @@
   "dependencies": {
     "react-dom": ">=0.14.0"
   },
-  "description": "Tiny immutable date manager",
+  "description": "Get the rendered size of a React element without needing to render it",
   "devDependencies": {
     "ava": "^0.18.2",
     "babel-cli": "^6.24.0",
@@ -79,5 +79,5 @@
     "test:watch": "NODE_PATH=. NODE_ENV=test ava --watch",
     "transpile": "babel src --out-dir lib"
   },
-  "version": "1.0.0"
+  "version": "1.0.1"
 }
