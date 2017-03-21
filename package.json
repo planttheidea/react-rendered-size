@@ -24,7 +24,7 @@
     "ava": "^0.18.2",
     "babel-cli": "^6.24.0",
     "babel-core": "^6.24.0",
-    "babel-eslint": "^7.1.1",
+    "babel-eslint": "^7.2.0",
     "babel-loader": "^6.4.1",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.2.2",
@@ -43,7 +43,7 @@
     "react-virtualized": "^9.3.0",
     "remeasure": "^2.1.4",
     "rimraf": "^2.6.1",
-    "sinon": "^2.0.0",
+    "sinon": "^2.1.0",
     "webpack": "^2.2.1",
     "webpack-dashboard": "^0.3.0",
     "webpack-dev-server": "^2.4.2"
