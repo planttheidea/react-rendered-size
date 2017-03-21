@@ -48,7 +48,7 @@ test('if getNewContainer will create a new container, apply the width directly t
     }
   };
 
-  const result = element.getNewContainer(doc, type, width);
+  const result = element.getNewContainer(doc, type, undefined, width);
 
   t.is(result, container);
   t.deepEqual(result, {
@@ -73,7 +73,7 @@ test('if getNewContainer will create a new container, apply the width with px to
     }
   };
 
-  const result = element.getNewContainer(doc, type, width);
+  const result = element.getNewContainer(doc, type, undefined, width);
 
   t.is(result, container);
   t.deepEqual(result, {
@@ -83,15 +83,48 @@ test('if getNewContainer will create a new container, apply the width with px to
   });
 });
 
+test('if getNewContainer will use the existing container and return it as-is', (t) => {
+  const type = constants.DEFAULT_CONTAINER_ELEMENT;
+  const width = 1000;
+  const container = {
+    style: {}
+  };
+  const customContainer = {
+    style: {}
+  };
+
+  const doc = {
+    createElement(string) {
+      t.is(string, type);
+
+      return container;
+    }
+  };
+
+  const result = element.getNewContainer(doc, type, customContainer, width);
+
+  t.is(result, customContainer);
+  t.deepEqual(result, {
+    style: {}
+  });
+});
+
 test('if getRenderedElement will call render from ReactDOM with container and element', (t) => {
-  const stub = sinon.stub(ReactDOM, 'render');
+  const findNodeStub = sinon.stub(ReactDOM, 'findDOMNode');
+  const renderStub = sinon.stub(ReactDOM, 'render').callsFake((reactElement, renderContainer, doneFn) => {
+    if (doneFn) {
+      doneFn();
+    }
+  });
 
   const container = 'foo';
   const el = 'bar';
 
   element.getRenderedElement(container, el);
 
-  t.true(stub.calledWith(el, container));
+  t.true(renderStub.calledWith(el, container));
+  t.true(findNodeStub.calledOnce);
 
-  stub.restore();
+  renderStub.restore();
+  findNodeStub.restore();
 });

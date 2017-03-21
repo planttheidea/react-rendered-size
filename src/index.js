@@ -25,6 +25,7 @@ let mainContainer;
  */
 export const getRenderedSize = (element, containerWidth, containerOptions = {}) => {
   const {
+    container,
     doc = document,
     type = DEFAULT_CONTAINER_ELEMENT
   } = containerOptions;
@@ -35,17 +36,17 @@ export const getRenderedSize = (element, containerWidth, containerOptions = {}) 
     doc.body.appendChild(mainContainer);
   }
 
-  const container = getNewContainer(doc, type, containerWidth || doc.documentElement.clientWidth);
+  const renderContainer = getNewContainer(doc, type, container, containerWidth || doc.documentElement.clientWidth);
 
-  mainContainer.appendChild(container);
+  mainContainer.appendChild(renderContainer);
 
-  const renderedElement = getRenderedElement(container, element);
+  const renderedElement = getRenderedElement(renderContainer, element);
   const size = {
     height: renderedElement.offsetHeight,
     width: renderedElement.offsetWidth
   };
 
-  mainContainer.removeChild(container);
+  mainContainer.removeChild(renderContainer);
 
   return size;
 };
