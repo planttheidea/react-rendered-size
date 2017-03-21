@@ -78,14 +78,18 @@ Function to retrieve the size of the `reactElement` passed. You can also optiona
 ```javascript
 {
   /*
+    custom container to render inside of. defaults to undefined (will create own element internally).
+  */
+  container: ?HTMLElement,
+  /*
     document to use for element creation / manipulation, which is useful for test environments
     where no DOM exists (easy mocking). defaults to browser document.
   */
-  doc: Object,
+  doc: ?Object,
   /*
     the type of container that will house the element when rendered off-screen. defaults to 'div'.
   */
-  type: string
+  type: ?string
 }
 ```
 
