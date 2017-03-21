@@ -41,6 +41,23 @@ while (++index < 10000) {
   listItems.push(text);
 }
 
+const Bar = ({item, style}) => {
+  return (
+    <div style={style}>
+      {item}
+    </div>
+  );
+};
+
+const Foo = ({item, style}) => {
+  return (
+    <Bar
+      item={item}
+      style={style}
+    />
+  );
+};
+
 class App extends Component {
   static propTypes = {
     width: PropTypes.number.isRequired
@@ -71,12 +88,11 @@ class App extends Component {
     const item = listItems[index];
 
     return (
-      <div
+      <Foo
+        item={item}
         key={key}
         style={style}
-      >
-        {item}
-      </div>
+      />
     );
   };
 

@@ -85,7 +85,7 @@ test.serial('if getRenderedSize will return the rendered size of the react eleme
   } = setupIndexTest(500);
 
   const stubsCalledWith = [
-    [doc, constants.DEFAULT_CONTAINER_ELEMENT, width],
+    [doc, constants.DEFAULT_CONTAINER_ELEMENT, undefined, width],
     [container, reactElement]
   ];
 
@@ -123,7 +123,7 @@ test.serial('if getRenderedSize will return the rendered size of the react eleme
   } = setupIndexTest();
 
   const stubsCalledWith = [
-    [doc, constants.DEFAULT_CONTAINER_ELEMENT, doc.documentElement.clientWidth],
+    [doc, constants.DEFAULT_CONTAINER_ELEMENT, undefined, doc.documentElement.clientWidth],
     [container, reactElement]
   ];
 
@@ -163,7 +163,7 @@ test.serial('if getRenderedSize will call getNewContainer with the right type wh
   const type = 'foo';
 
   const stubsCalledWith = [
-    [doc, type, width],
+    [doc, type, undefined, width],
     [container, reactElement]
   ];
 
@@ -203,7 +203,7 @@ test.serial('if getRenderedSize will use the right defaults when no options are 
   } = setupIndexTest(500);
 
   const stubsCalledWith = [
-    [global.document, constants.DEFAULT_CONTAINER_ELEMENT, width],
+    [global.document, constants.DEFAULT_CONTAINER_ELEMENT, undefined, width],
     [container, reactElement]
   ];
 
@@ -241,7 +241,7 @@ test.serial('if getRenderedHeight calls getRenderedSize and returns the height p
   } = setupIndexTest(500);
 
   const stubsCalledWith = [
-    [doc, constants.DEFAULT_CONTAINER_ELEMENT, width],
+    [doc, constants.DEFAULT_CONTAINER_ELEMENT, undefined, width],
     [container, reactElement]
   ];
 
@@ -276,7 +276,7 @@ test.serial('if getRenderedWidth calls getRenderedSize and returns the width pro
   } = setupIndexTest(500);
 
   const stubsCalledWith = [
-    [doc, constants.DEFAULT_CONTAINER_ELEMENT, width],
+    [doc, constants.DEFAULT_CONTAINER_ELEMENT, undefined, width],
     [container, reactElement]
   ];
 

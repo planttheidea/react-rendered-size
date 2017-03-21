@@ -1,5 +1,6 @@
 // external dependencies
 import {
+  findDOMNode,
   render
 } from 'react-dom';
 
@@ -38,10 +39,15 @@ export const getMainContainer = (doc) => {
  *
  * @param {Object} doc document to create element with
  * @param {string} type the type of element to use for the container
+ * @param {HTMLElement} passedContainer the passed container to used, instead of creating one
  * @param {number|string} width the width to assign to the container
  * @returns {HTMLElement} the new container element
  */
-export const getNewContainer = (doc, type, width) => {
+export const getNewContainer = (doc, type, passedContainer, width) => {
+  if (passedContainer) {
+    return passedContainer;
+  }
+  
   const container = doc.createElement(type);
 
   container.style.width = typeof width === 'number' ? `${width}px` : width;
@@ -60,5 +66,18 @@ export const getNewContainer = (doc, type, width) => {
  * @returns {HTMLElement} the ReactElement rendered as a DOM element
  */
 export const getRenderedElement = (container, element) => {
-  return render(element, container);
+  let doneRendering = false,
+      renderResult;
+
+  render(element, container, () => {
+    renderResult = container.firstChild;
+
+    doneRendering = true;
+  });
+
+  /* eslint-disable no-empty */
+  while (!doneRendering) {}
+  /* eslint-enable */
+
+  return findDOMNode(renderResult);
 };
