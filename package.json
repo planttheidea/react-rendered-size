@@ -17,7 +17,6 @@
     "url": "https://github.com/planttheidea/react-rendered-size/issues"
   },
   "dependencies": {
-    "react-dom": ">=0.14.0"
   },
   "description": "Get the rendered size of a React element without needing to render it",
   "devDependencies": {
@@ -40,6 +39,7 @@
     "nyc": "^10.1.2",
     "optimize-js-plugin": "^0.0.4",
     "react": ">=0.14.0",
+    "react-dom": ">=0.14.0",
     "react-virtualized": "^9.3.0",
     "remeasure": "^2.1.4",
     "rimraf": "^2.6.1",
@@ -58,7 +58,8 @@
   "main": "lib/index.js",
   "name": "react-rendered-size",
   "peerDependencies": {
-    "react": ">=0.14.0"
+    "react": ">=0.14.0",
+    "react-dom": ">=0.14.0"
   },
   "repository": {
     "type": "git",
