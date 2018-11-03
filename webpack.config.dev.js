@@ -23,9 +23,7 @@ module.exports = Object.assign({}, defaultConfig, {
     }
   },
 
-  entry: [
-    path.resolve(__dirname, 'DEV_ONLY', 'index.js')
-  ],
+  entry: [path.resolve(__dirname, 'DEV_ONLY', 'index.js')],
 
   externals: undefined,
 
@@ -33,14 +31,10 @@ module.exports = Object.assign({}, defaultConfig, {
     rules: defaultConfig.module.rules.map((rule) => {
       if (rule.loader === 'babel-loader') {
         return Object.assign({}, rule, {
-          include: rule.include.concat([
-            path.resolve(__dirname, 'DEV_ONLY')
-          ]),
+          include: rule.include.concat([path.resolve(__dirname, 'DEV_ONLY')]),
           options: Object.assign({}, rule.options, {
             cacheDirectory: true,
-            presets: rule.options.presets.concat([
-              'react'
-            ])
+            presets: rule.options.presets.concat(['react'])
           })
         });
       }

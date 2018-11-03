@@ -1,13 +1,8 @@
 // external dependencies
-import {
-  findDOMNode,
-  render
-} from 'react-dom';
+import {findDOMNode, render} from 'react-dom';
 
 // constants
-import {
-  RENDER_CONTAINER_ID
-} from './constants';
+import {RENDER_CONTAINER_ID} from './constants';
 
 /**
  * @function getMainContainer
@@ -47,7 +42,7 @@ export const getNewContainer = (doc, type, passedContainer, width) => {
   if (passedContainer) {
     return passedContainer;
   }
-  
+
   const container = doc.createElement(type);
 
   container.style.width = typeof width === 'number' ? `${width}px` : width;

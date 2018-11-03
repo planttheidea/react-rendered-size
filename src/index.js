@@ -1,14 +1,8 @@
 // constants
-import {
-  DEFAULT_CONTAINER_ELEMENT
-} from './constants';
+import {DEFAULT_CONTAINER_ELEMENT} from './constants';
 
 // element
-import {
-  getMainContainer,
-  getNewContainer,
-  getRenderedElement
-} from './element';
+import {getMainContainer, getNewContainer, getRenderedElement} from './element';
 
 let mainContainer;
 
@@ -24,11 +18,7 @@ let mainContainer;
  * @returns {{height: number, width: number}} the size of the rendered ReactElement
  */
 export const getRenderedSize = (element, containerWidth, containerOptions = {}) => {
-  const {
-    container,
-    doc = document,
-    type = DEFAULT_CONTAINER_ELEMENT
-  } = containerOptions;
+  const {container, doc = document, type = DEFAULT_CONTAINER_ELEMENT} = containerOptions;
 
   if (!mainContainer) {
     mainContainer = getMainContainer(doc);

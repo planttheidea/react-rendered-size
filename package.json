@@ -16,8 +16,6 @@
   "bugs": {
     "url": "https://github.com/planttheidea/react-rendered-size/issues"
   },
-  "dependencies": {
-  },
   "description": "Get the rendered size of a React element without needing to render it",
   "devDependencies": {
     "ava": "^0.18.2",
@@ -38,6 +36,7 @@
     "in-publish": "^2.0.0",
     "nyc": "^10.1.2",
     "optimize-js-plugin": "^0.0.4",
+    "prop-types": "^15.6.2",
     "react": ">=0.14.0",
     "react-dom": ">=0.14.0",
     "react-virtualized": "^9.3.0",

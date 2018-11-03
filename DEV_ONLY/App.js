@@ -1,12 +1,8 @@
 // external dependencies
-import React, {
-  Component,
-  PropTypes
-} from 'react';
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 import ReactMount from 'react-dom';
-import {
-  List
-} from 'react-virtualized';
+import {List} from 'react-virtualized';
 import measure from 'remeasure';
 
 // src
@@ -20,20 +16,15 @@ let listItems = [],
     index = -1;
 
 while (++index < 10000) {
-  const text = !isLargeIndex(index) ? `Item ${index}` : (
+  const text = !isLargeIndex(index) ? (
+    `Item ${index}`
+  ) : (
     <div>
       This will be
-
-      <br/>
-
-      a very long piece of text
-
-      <br/>
-
+      <br />a very long piece of text
+      <br />
       with carraige returns
-
-      <br/>
-
+      <br />
       for item {index}.
     </div>
   );
@@ -42,20 +33,14 @@ while (++index < 10000) {
 }
 
 const Bar = ({item, style}) => {
-  return (
-    <div style={style}>
-      {item}
-    </div>
-  );
+  return <div style={style}>{item}</div>;
 };
 
 const Foo = ({item, style}) => {
-  return (
-    <Bar
-      item={item}
-      style={style}
-    />
-  );
+  return (<Bar
+    item={item}
+    style={style}
+  />);
 };
 
 class App extends Component {
@@ -67,9 +52,7 @@ class App extends Component {
   list = null;
 
   getRowHeight = ({index}) => {
-    const {
-      width
-    } = this.props;
+    const {width} = this.props;
 
     if (!isLargeIndex(index)) {
       return 18;
@@ -87,13 +70,11 @@ class App extends Component {
   rowRenderer = ({index, key, style}) => {
     const item = listItems[index];
 
-    return (
-      <Foo
-        item={item}
-        key={key}
-        style={style}
-      />
-    );
+    return (<Foo
+      item={item}
+      key={key}
+      style={style}
+    />);
   };
 
   setListRef = (component) => {
@@ -101,15 +82,11 @@ class App extends Component {
   };
 
   render() {
-    const {
-      width
-    } = this.props;
+    const {width} = this.props;
 
     return (
       <main>
-        <h1>
-          App
-        </h1>
+        <h1>App</h1>
 
         <List
           estimatedRowSize={38}
