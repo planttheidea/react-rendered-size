@@ -12,6 +12,8 @@ module.exports = {
 
   externals: ['react', 'react-dom'],
 
+  mode: 'development',
+
   module: {
     rules: [
       {
