@@ -4,8 +4,6 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  cache: true,
-
   devtool: '#source-map',
 
   entry: [path.resolve(__dirname, 'src', 'index.js')],
@@ -25,27 +23,14 @@ module.exports = {
           emitError: true,
           failOnError: true,
           failOnWarning: true,
-          formatter: require('eslint-friendly-formatter')
+          formatter: require('eslint-friendly-formatter'),
         },
         test: /\.js$/
       },
       {
-        include: [path.resolve(__dirname, 'src')],
-        options: {
-          babelrc: false,
-          presets: [
-            [
-              'env',
-              {
-                loose: true,
-                modules: false
-              }
-            ],
-            'stage-2'
-          ]
-        },
+        include: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'DEV_ONLY')],
         test: /\.js$/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
       }
     ]
   },
@@ -55,12 +40,12 @@ module.exports = {
     library: 'getRenderedSize',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, 'dist'),
-    umdNamedDefine: true
+    umdNamedDefine: true,
   },
 
   plugins: [new webpack.EnvironmentPlugin(['NODE_ENV'])],
 
   resolve: {
-    modules: [path.join(__dirname, 'src'), 'node_modules']
+    modules: [path.join(__dirname, 'src'), 'node_modules'],
   }
 };

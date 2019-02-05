@@ -1,5 +1,8 @@
 // external dependencies
-import {findDOMNode, render} from 'react-dom';
+import {
+  findDOMNode,
+  render,
+} from 'react-dom';
 
 // constants
 import {RENDER_CONTAINER_ID} from './constants';
@@ -18,9 +21,9 @@ export const getMainContainer = (doc) => {
 
   container.id = RENDER_CONTAINER_ID;
 
-  container.style.left = '-10000px';
+  container.style.left = '-9999px';
   container.style.position = 'absolute';
-  container.style.top = '-10000px';
+  container.style.top = '-9999px';
   container.style.visibility = 'hidden';
 
   return container;
@@ -60,19 +63,5 @@ export const getNewContainer = (doc, type, passedContainer, width) => {
  * @param {ReactElement} element the element to render into the container
  * @returns {HTMLElement} the ReactElement rendered as a DOM element
  */
-export const getRenderedElement = (container, element) => {
-  let doneRendering = false,
-      renderResult;
-
-  render(element, container, () => {
-    renderResult = container.firstChild;
-
-    doneRendering = true;
-  });
-
-  /* eslint-disable no-empty */
-  while (!doneRendering) {}
-  /* eslint-enable */
-
-  return findDOMNode(renderResult);
-};
+export const getRenderedElement = (container, element) =>
+  new Promise((resolve) => render(element, container, resolve)).then(() => findDOMNode(container.firstChild));

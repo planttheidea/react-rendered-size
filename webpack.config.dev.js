@@ -14,11 +14,11 @@ module.exports = Object.assign({}, defaultConfig, {
     inline: true,
     lazy: false,
     noInfo: false,
-    quiet: false,
     port: PORT,
+    quiet: false,
     stats: {
       colors: true,
-      progress: true
+      progress: true,
     }
   },
 
@@ -32,9 +32,8 @@ module.exports = Object.assign({}, defaultConfig, {
         return Object.assign({}, rule, {
           include: rule.include.concat([path.resolve(__dirname, 'DEV_ONLY')]),
           options: Object.assign({}, rule.options, {
-            cacheDirectory: true,
-            presets: rule.options.presets.concat(['react'])
-          })
+            presets: ['@babel/preset-react'],
+          }),
         });
       }
 
@@ -42,7 +41,7 @@ module.exports = Object.assign({}, defaultConfig, {
         return Object.assign({}, rule, {
           options: Object.assign({}, rule.options, {
             emitError: undefined,
-            failOnWarning: false
+            failOnWarning: false,
           })
         });
       }

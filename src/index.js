@@ -2,7 +2,11 @@
 import {DEFAULT_CONTAINER_ELEMENT} from './constants';
 
 // element
-import {getMainContainer, getNewContainer, getRenderedElement} from './element';
+import {
+  getMainContainer,
+  getNewContainer,
+  getRenderedElement,
+} from './element';
 
 let mainContainer;
 
@@ -18,7 +22,22 @@ let mainContainer;
  * @returns {{height: number, width: number}} the size of the rendered ReactElement
  */
 export const getRenderedSize = (element, containerWidth, containerOptions = {}) => {
-  const {container, doc = document, type = DEFAULT_CONTAINER_ELEMENT} = containerOptions;
+  const {container, type = DEFAULT_CONTAINER_ELEMENT} = containerOptions;
+
+  let {doc} = containerOptions;
+
+  if (!doc) {
+    if (typeof document === 'undefined') {
+      // this may be happening in an SSR mount, so return default values
+      // instead of throwing error
+      return Promise.resolve({
+        height: 0,
+        width: 0,
+      });
+    }
+
+    doc = document;
+  }
 
   if (!mainContainer) {
     mainContainer = getMainContainer(doc);
@@ -30,16 +49,32 @@ export const getRenderedSize = (element, containerWidth, containerOptions = {}) 
 
   mainContainer.appendChild(renderContainer);
 
-  const renderedElement = getRenderedElement(renderContainer, element);
-  const size = {
-    height: renderedElement.offsetHeight,
-    width: renderedElement.offsetWidth
-  };
+  return getRenderedElement(renderContainer, element)
+    .catch((error) => {
+      if (typeof console !== 'undefined') {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }
 
-  mainContainer.removeChild(renderContainer);
+      return {
+        offsetHeight: 0,
+        offsetWidth: 0,
+      };
+    })
+    .then((renderedElement) => {
+      const size = {
+        height: renderedElement.offsetHeight,
+        width: renderedElement.offsetWidth,
+      };
 
-  return size;
+      mainContainer.removeChild(renderContainer);
+
+      return size;
+    });
 };
+
+export const createGetRenderedValue = (value) => (renderContainer, element, containerOptions) =>
+  getRenderedSize(renderContainer, element, containerOptions).then((size) => size[value]);
 
 /**
  * @function getRenderedHeight
@@ -47,14 +82,9 @@ export const getRenderedSize = (element, containerWidth, containerOptions = {}) 
  * @description
  * shortcut method to get only the height property from getRenderedSize
  *
- * @param {...Array<*>} args the arguments to pass to getRenderedSize
  * @returns {number} the rendered height
  */
-export const getRenderedHeight = (...args) => {
-  const size = getRenderedSize(...args);
-
-  return size.height;
-};
+export const getRenderedHeight = createGetRenderedValue('height');
 
 /**
  * @function getRenderedWidth
@@ -65,10 +95,4 @@ export const getRenderedHeight = (...args) => {
  * @param {...Array<*>} args the arguments to pass to getRenderedSize
  * @returns {number} the rendered width
  */
-export const getRenderedWidth = (...args) => {
-  const size = getRenderedSize(...args);
-
-  return size.width;
-};
-
-export default getRenderedSize;
+export const getRenderedWidth = createGetRenderedValue('width');

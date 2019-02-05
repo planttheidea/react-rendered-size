@@ -1,12 +1,17 @@
 // external dependencies
+import debounce from 'debounce';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import ReactMount from 'react-dom';
 import {List} from 'react-virtualized';
-import measure from 'remeasure';
+import {measure} from 'remeasure';
 
 // src
-import getRenderedSize from '../src';
+import {
+  getRenderedHeight,
+  getRenderedSize,
+} from '../src';
+
+const DEFAULT_ROW_SIZE = 38;
 
 const isLargeIndex = (index) => {
   return index % 10 === 0;
@@ -48,6 +53,10 @@ class App extends Component {
     width: PropTypes.number.isRequired
   };
 
+  state = {
+    sizes: []
+  };
+
   height = 500;
   list = null;
 
@@ -58,23 +67,53 @@ class App extends Component {
       return 18;
     }
 
-    console.time();
+    const {sizes} = this.state;
 
-    const height = getRenderedSize(this.rowRenderer({index}), width).height;
+    if (sizes[index]) {
+      return sizes[index];
+    }
 
-    console.timeEnd();
+    // getRenderedSize(this.rowRenderer({index}), width)
+    //   .then((size) => {
+    //     this.setState(
+    //       ({sizes}) => {
+    //         sizes[index] = size.height;
 
-    return height;
+    //         return {
+    //           sizes,
+    //         };
+    //       },
+    //       debounce(() => this.list.recomputeGridSize())
+    //     );
+    //   });
+    getRenderedHeight(this.rowRenderer({index}), width)
+      .then((height) => {
+        this.setState(
+          ({sizes}) => {
+            sizes[index] = height;
+
+            return {
+              sizes,
+            };
+          },
+          debounce(() => this.list.recomputeGridSize())
+        );
+      });
+
+    return DEFAULT_ROW_SIZE;
   };
 
   rowRenderer = ({index, key, style}) => {
     const item = listItems[index];
 
-    return (<Foo
-      item={item}
-      key={key}
-      style={style}
-    />);
+    return (
+      // eslint workaround
+      <Foo
+        item={item}
+        key={key}
+        style={style}
+      />
+    );
   };
 
   setListRef = (component) => {
@@ -89,7 +128,7 @@ class App extends Component {
         <h1>App</h1>
 
         <List
-          estimatedRowSize={38}
+          estimatedRowSize={DEFAULT_ROW_SIZE}
           height={this.height}
           ref={this.setListRef}
           rowCount={listItems.length}
