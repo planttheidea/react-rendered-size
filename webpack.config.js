@@ -1,51 +1,67 @@
-'use strict';
+"use strict";
 
-const path = require('path');
-const webpack = require('webpack');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require("path");
+const webpack = require("webpack");
+
+const ROOT = __dirname;
 
 module.exports = {
-  devtool: '#source-map',
+  devServer: {
+    contentBase: "./dist",
+    inline: true,
+    port: 3000,
+    stats: {
+      assets: false,
+      chunks: true,
+      chunkModules: false,
+      colors: true,
+      hash: false,
+      timings: true,
+      version: false
+    }
+  },
 
-  entry: [path.resolve(__dirname, 'src', 'index.js')],
+  devtool: "#source-map",
 
-  externals: ['react', 'react-dom'],
+  entry: path.join(ROOT, "DEV_ONLY", "index.tsx"),
 
-  mode: 'development',
+  mode: "development",
 
   module: {
     rules: [
       {
-        enforce: 'pre',
-        include: [path.resolve(__dirname, 'src')],
-        loader: 'eslint-loader',
-        options: {
-          configFile: '.eslintrc',
-          emitError: true,
-          failOnError: true,
-          failOnWarning: true,
-          formatter: require('eslint-friendly-formatter'),
-        },
-        test: /\.js$/
+        enforce: "pre",
+        include: [path.resolve(ROOT, "src")],
+        loader: "tslint-loader",
+        test: /\.ts$/
       },
       {
-        include: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'DEV_ONLY')],
-        test: /\.js$/,
-        loader: 'babel-loader',
+        include: [path.resolve(ROOT, "src"), /DEV_ONLY/],
+        loader: "ts-loader",
+        test: /\.tsx?$/
       }
     ]
   },
 
-  output: {
-    filename: 'react-rendered-size.js',
-    library: 'getRenderedSize',
-    libraryTarget: 'umd',
-    path: path.resolve(__dirname, 'dist'),
-    umdNamedDefine: true,
+  node: {
+    fs: "empty"
   },
 
-  plugins: [new webpack.EnvironmentPlugin(['NODE_ENV'])],
+  output: {
+    filename: "react-rendered-size.js",
+    library: "ReactRenderedSize",
+    libraryTarget: "umd",
+    path: path.resolve(ROOT, "dist"),
+    umdNamedDefine: true
+  },
+
+  plugins: [
+    new webpack.EnvironmentPlugin(["NODE_ENV"]),
+    new HtmlWebpackPlugin()
+  ],
 
   resolve: {
-    modules: [path.join(__dirname, 'src'), 'node_modules'],
+    extensions: [".ts", ".js"]
   }
 };

@@ -1,60 +1,41 @@
 {
   "author": "planttheidea",
-  "ava": {
-    "babel": "inherit",
-    "concurrency": 5,
-    "failFast": true,
-    "files": [
-      "./test/*.js"
-    ],
-    "require": [
-      "babel-register",
-      "babel-polyfill"
-    ],
-    "verbose": true
-  },
+  "browser": "dist/react-rendered-size.js",
   "bugs": {
     "url": "https://github.com/planttheidea/react-rendered-size/issues"
   },
   "description": "Get the rendered size of a React element without needing to render it",
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.0.0",
-    "@babel/plugin-proposal-decorators": "^7.0.0",
-    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
-    "@babel/plugin-proposal-function-sent": "^7.0.0",
-    "@babel/plugin-proposal-json-strings": "^7.0.0",
-    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
-    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/plugin-syntax-import-meta": "^7.0.0",
-    "@babel/polyfill": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/register": "^7.0.0",
-    "ava": "^1.2.0",
-    "babel-eslint": "^10.0.1",
-    "babel-loader": "^8.0.5",
-    "debounce": "^1.2.0",
-    "eslint": "^5.13.0",
-    "eslint-config-rapid7": "^3.1.0",
-    "eslint-friendly-formatter": "^4.0.1",
-    "eslint-loader": "^2.1.1",
+    "@types/jest": "^23.3.13",
+    "@types/lodash": "^4.14.120",
+    "@types/node": "^10.12.19",
+    "@types/ramda": "^0.25.47",
+    "@types/react": "^16.7.22",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-virtualized": "^9.18.12",
     "html-webpack-plugin": "^3.2.0",
     "in-publish": "^2.0.0",
-    "nyc": "^13.2.0",
-    "optimize-js-plugin": "^0.0.4",
+    "jest": "^24.0.0",
+    "lodash": "^4.17.11",
+    "nyc": "^13.0.1",
     "prop-types": "^15.6.2",
-    "react": ">=0.14.0",
-    "react-dom": ">=0.14.0",
-    "react-virtualized": "^9.3.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-virtualized": "^9.21.0",
     "remeasure": "^3.1.1",
-    "rimraf": "^2.6.1",
-    "sinon": "^7.2.3",
-    "webpack": "^4.29.1",
-    "webpack-cli": "^3.2.2",
-    "webpack-dev-server": "^3.1.14"
+    "rollup": "^1.1.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-terser": "^4.0.3",
+    "rollup-plugin-typescript2": "^0.19.2",
+    "ts-jest": "^23.10.4",
+    "ts-loader": "^5.3.3",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.0",
+    "tslint-loader": "^3.5.4",
+    "typescript": "^3.2.4",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.0",
+    "webpack-dev-server": "^3.1.5"
   },
   "homepage": "https://github.com/planttheidea/react-rendered-size#readme",
   "keywords": [
@@ -63,11 +44,13 @@
     "time"
   ],
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "dist/react-rendered-size.cjs.js",
+  "module": "dist/react-rendered-size.esm.js",
   "name": "react-rendered-size",
   "peerDependencies": {
-    "react": ">=0.14.0",
-    "react-dom": ">=0.14.0"
+    "prop-types": "^15.0.0 || ^16.0.0",
+    "react": "^15.0.0 || ^16.0.0",
+    "react-dom": "^15.0.0 || ^16.0.0"
   },
   "repository": {
     "type": "git",
@@ -75,7 +58,7 @@
   },
   "scripts": {
     "clean": "rimraf lib && rimraf dist",
-    "dev": "NODE_ENV=development webpack-dev-server --progress --colors --config=webpack.config.dev.js",
+    "dev": "NODE_ENV=development webpack-dev-server --progress --colors",
     "dist": "NODE_ENV=development webpack --colors --profile --progress",
     "dist:minified": "NODE_ENV=production webpack --colors --profile --progress --config=webpack.config.minified.js",
     "lint": "eslint src",
