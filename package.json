@@ -14,6 +14,7 @@
     "@types/react-dom": "^16.0.11",
     "@types/react-virtualized": "^9.18.12",
     "@typescript-eslint/eslint-plugin": "^1.2.0",
+    "@typescript-eslint/parser": "^1.2.0",
     "eslint": "^5.13.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "^2.1.2",
@@ -73,8 +74,5 @@
     "test:coverage": "nyc npm test",
     "test:watch": "npm test -- --watch"
   },
-  "version": "1.1.1",
-  "dependencies": {
-    "@typescript-eslint/parser": "^1.2.0"
-  }
+  "version": "1.1.1"
 }
