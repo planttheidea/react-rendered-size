@@ -4,7 +4,6 @@
 import { findDOMNode, render } from 'react-dom';
 
 // constants
-// eslint-disable-next-line no-unused-vars
 import { ReactElement } from 'react';
 import { RENDER_CONTAINER_ID } from './constants';
 

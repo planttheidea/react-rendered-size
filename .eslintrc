@@ -1,6 +1,7 @@
 {
   "extends": ["airbnb"],
   "parser": "@typescript-eslint/parser",
+  "plugins": ["typescript"],
   "settings": {
     "import/resolver": {
       "node": {
@@ -11,6 +12,9 @@
   "rules": {
     "implicit-arrow-linebreak": 0,
     "max-len": 0,
-    "react/no-find-dom-node": 0
+    "no-unused-vars": 0,
+
+    "react/no-find-dom-node": 0,
+    "typescript/no-unused-vars": 2
   }
 }
