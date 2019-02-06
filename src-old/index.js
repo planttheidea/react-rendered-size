@@ -1,5 +1,7 @@
+/* globals document */
+
 // constants
-import {DEFAULT_CONTAINER_ELEMENT} from './constants';
+import { DEFAULT_CONTAINER_ELEMENT } from './constants';
 
 // element
 import {
@@ -22,9 +24,9 @@ let mainContainer;
  * @returns {{height: number, width: number}} the size of the rendered ReactElement
  */
 export const getRenderedSize = (element, containerWidth, containerOptions = {}) => {
-  const {container, type = DEFAULT_CONTAINER_ELEMENT} = containerOptions;
+  const { container, type = DEFAULT_CONTAINER_ELEMENT } = containerOptions;
 
-  let {doc} = containerOptions;
+  let { doc } = containerOptions;
 
   if (!doc) {
     if (typeof document === 'undefined') {
@@ -45,7 +47,12 @@ export const getRenderedSize = (element, containerWidth, containerOptions = {}) 
     doc.body.appendChild(mainContainer);
   }
 
-  const renderContainer = getNewContainer(doc, type, container, containerWidth || doc.documentElement.clientWidth);
+  const renderContainer = getNewContainer(
+    doc,
+    type,
+    container,
+    containerWidth || doc.documentElement.clientWidth,
+  );
 
   mainContainer.appendChild(renderContainer);
 
@@ -73,8 +80,7 @@ export const getRenderedSize = (element, containerWidth, containerOptions = {}) 
     });
 };
 
-export const createGetRenderedValue = (value) => (renderContainer, element, containerOptions) =>
-  getRenderedSize(renderContainer, element, containerOptions).then((size) => size[value]);
+export const createGetRenderedValue = value => (renderContainer, element, containerOptions) => getRenderedSize(renderContainer, element, containerOptions).then(size => size[value]);
 
 /**
  * @function getRenderedHeight

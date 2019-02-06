@@ -1,9 +1,12 @@
+/* globals HTMLElement,HTMLDocument */
+
 // external dependencies
 import { findDOMNode, render } from 'react-dom';
 
 // constants
+// eslint-disable-next-line no-unused-vars
+import { ReactElement } from 'react';
 import { RENDER_CONTAINER_ID } from './constants';
-import { ReactElement, ReactInstance } from 'react';
 
 /**
  * @function getMainContainer
@@ -83,8 +86,10 @@ export const getRenderedElement = (
   element: ReactElement<any>,
 ): Promise<HTMLElement> =>
   // @ts-ignore
-  new Promise((resolve) => render(element, container, resolve)).then(() =>
-    isHtmlElement(container.firstChild)
-      ? findDOMNode(container.firstChild)
-      : null,
-  );
+  new Promise(resolve => render(element, container, resolve)).then(() => {
+    if (!isHtmlElement(container.firstChild)) {
+      return null;
+    }
+
+    return findDOMNode(container.firstChild);
+  });

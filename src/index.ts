@@ -1,4 +1,7 @@
+/* globals document */
+
 // types
+// eslint-disable-next-line no-unused-vars
 import { ReactElement } from 'react';
 
 // constants

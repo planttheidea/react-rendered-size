@@ -33,7 +33,7 @@ module.exports = {
       {
         enforce: "pre",
         include: [path.resolve(ROOT, "src")],
-        loader: "tslint-loader",
+        loader: "eslint-loader",
         test: /\.ts$/
       },
       {

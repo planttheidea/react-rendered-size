@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 declare namespace ReactRenderedSize {
   export type ContainerOptions = {
     container?: HTMLElement;

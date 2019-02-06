@@ -5,7 +5,7 @@ import {
 } from 'react-dom';
 
 // constants
-import {RENDER_CONTAINER_ID} from './constants';
+import { RENDER_CONTAINER_ID } from './constants';
 
 /**
  * @function getMainContainer
@@ -64,4 +64,5 @@ export const getNewContainer = (doc, type, passedContainer, width) => {
  * @returns {HTMLElement} the ReactElement rendered as a DOM element
  */
 export const getRenderedElement = (container, element) =>
-  new Promise((resolve) => render(element, container, resolve)).then(() => findDOMNode(container.firstChild));
+  new Promise(resolve => render(element, container, resolve))
+    .then(() => findDOMNode(container.firstChild));

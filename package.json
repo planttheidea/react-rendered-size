@@ -13,6 +13,12 @@
     "@types/react": "^16.7.22",
     "@types/react-dom": "^16.0.11",
     "@types/react-virtualized": "^9.18.12",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
     "html-webpack-plugin": "^3.2.0",
     "in-publish": "^2.0.0",
     "jest": "^24.0.0",
@@ -29,9 +35,6 @@
     "rollup-plugin-typescript2": "^0.19.2",
     "ts-jest": "^23.10.4",
     "ts-loader": "^5.3.3",
-    "tslint": "^5.11.0",
-    "tslint-config-airbnb": "^5.11.0",
-    "tslint-loader": "^3.5.4",
     "typescript": "^3.2.4",
     "webpack": "^4.29.0",
     "webpack-cli": "^3.2.0",
@@ -71,5 +74,8 @@
     "test:watch": "NODE_PATH=. NODE_ENV=test ava --watch",
     "transpile": "babel src --out-dir lib"
   },
-  "version": "1.1.1"
+  "version": "1.1.1",
+  "dependencies": {
+    "@typescript-eslint/parser": "^1.2.0"
+  }
 }
