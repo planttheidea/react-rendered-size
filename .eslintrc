@@ -1,7 +1,7 @@
 {
   "extends": ["airbnb"],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["typescript"],
+  "plugins": ["@typescript-eslint"],
   "settings": {
     "import/resolver": {
       "node": {
@@ -17,6 +17,6 @@
     "import/no-extraneous-dependencies": 0,
     "react/jsx-filename-extension": 0,
     "react/no-find-dom-node": 0,
-    "typescript/no-unused-vars": 2
+    "@typescript-eslint/no-unused-vars": 2
   }
 }
