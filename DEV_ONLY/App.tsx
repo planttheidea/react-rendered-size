@@ -21,25 +21,25 @@ interface ReactVirtualizedList {
 
 const DEFAULT_ROW_SIZE = 38;
 
-const isLargeIndex = (index: number) => {
-  return index % 10 === 0;
-};
+const isLargeIndex = (index: number) => index % 10 === 0;
 
 const listItems: any[] = [];
 
 let index = -1;
 
+// eslint-disable-next-line no-plusplus
 while (++index < 10000) {
   const text = !isLargeIndex(index) ? (
     `Item ${index}`
   ) : (
     <div>
       This will be
-      <br />a very long piece of text
+      <br />
+      a very long piece of text
       <br />
       with carraige returns
       <br />
-      for item {index}.
+      {`for item ${index}.`}
     </div>
   );
 
@@ -52,9 +52,7 @@ const Bar = ({
 }: {
   item: ReactElement<any> | Text;
   style: object;
-}) => {
-  return <div style={style}>{item}</div>;
-};
+}) => <div style={style}>{item}</div>;
 
 const Foo = ({
   item,
@@ -62,9 +60,7 @@ const Foo = ({
 }: {
   item: ReactElement<any> | Text;
   style: object;
-}) => {
-  return <Bar item={item} style={style} />;
-};
+}) => <Bar item={item} style={style} />;
 
 class App extends Component<Props, any> {
   state: State = {
@@ -72,8 +68,10 @@ class App extends Component<Props, any> {
   };
 
   height: number = 500;
+
   list?: ReactVirtualizedList = null;
 
+  // eslint-disable-next-line no-shadow
   getRowHeight = ({ index }: { index: number }) => {
     const { width } = this.props;
 
@@ -88,13 +86,15 @@ class App extends Component<Props, any> {
     }
 
     getRenderedSize(this.rowRenderer({ index }), width).then((size) => {
+      // eslint-disable-next-line no-shadow
       this.setState(({ sizes }: State) => {
+        // eslint-disable-next-line no-param-reassign
         sizes[index] = size.height;
 
         return {
           sizes,
         };
-      },            debounce(() => this.list.recomputeGridSize()));
+      }, debounce(() => this.list.recomputeGridSize()));
     });
     // getRenderedHeight(this.rowRenderer({ index }), width).then((height) => {
     //   this.setState(({ sizes }: State) => {
@@ -107,9 +107,10 @@ class App extends Component<Props, any> {
     // });
 
     return DEFAULT_ROW_SIZE;
-  }
+  };
 
   rowRenderer = ({
+    // eslint-disable-next-line no-shadow
     index,
     key,
     style,
@@ -124,11 +125,11 @@ class App extends Component<Props, any> {
       // eslint workaround
       <Foo item={item} key={key} style={style} />
     );
-  }
+  };
 
   setListRef = (component: ReactVirtualizedList) => {
     this.list = component;
-  }
+  };
 
   render() {
     const { width } = this.props;
@@ -151,4 +152,5 @@ class App extends Component<Props, any> {
   }
 }
 
+// @ts-ignore
 export default measure.width(App);
