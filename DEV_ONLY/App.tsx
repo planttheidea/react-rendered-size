@@ -1,3 +1,5 @@
+/* globals requestAnimationFrame */
+
 // external dependencies
 import debounce from 'lodash/debounce';
 import React, { Component, ReactElement } from 'react';
@@ -71,6 +73,10 @@ class App extends Component<Props, State> {
 
   list?: ReactVirtualizedList = null;
 
+  updateGrid = debounce((sizes) => {
+    this.setState(sizes, () => this.list.recomputeGridSize());
+  }).bind(this);
+
   // eslint-disable-next-line no-shadow
   getRowHeight = ({ index }: { index: number }) => {
     const { width } = this.props;
@@ -85,26 +91,20 @@ class App extends Component<Props, State> {
       return sizes[index];
     }
 
-    getRenderedSize(this.rowRenderer({ index }), width).then((size) => {
-      // eslint-disable-next-line no-shadow
-      this.setState(({ sizes }) => {
-        // eslint-disable-next-line no-param-reassign
-        sizes[index] = size.height;
+    requestAnimationFrame(async () => {
+      // const { height } = await getRenderedSize(
+      //   this.rowRenderer({ index, key: index }),
+      //   width,
+      // );
+      const height = await getRenderedHeight(
+        this.rowRenderer({ index, key: index }),
+        width,
+      );
 
-        return {
-          sizes,
-        };
-      }, debounce(() => this.list.recomputeGridSize()));
+      sizes[index] = height;
+
+      this.updateGrid(sizes);
     });
-    // getRenderedHeight(this.rowRenderer({ index }), width).then((height) => {
-    //   this.setState(({ sizes }: State) => {
-    //     sizes[index] = height;
-
-    //     return {
-    //       sizes,
-    //     };
-    //   },            debounce(() => this.list.recomputeGridSize()));
-    // });
 
     return DEFAULT_ROW_SIZE;
   };

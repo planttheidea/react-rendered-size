@@ -43,10 +43,10 @@ export async function getRenderedSize(
     if (typeof document === 'undefined') {
       // this may be happening in an SSR mount, so return default values
       // instead of throwing error
-      return Promise.resolve({
+      return {
         height: 0,
         width: 0,
-      });
+      };
     }
 
     doc = document;
@@ -62,14 +62,16 @@ export async function getRenderedSize(
     doc,
     type,
     container,
-    containerWidth || doc.documentElement.clientWidth,
+    containerWidth !== undefined
+      ? containerWidth
+      : doc.documentElement.clientWidth,
   );
 
   mainContainer.appendChild(renderContainer);
 
-  try {
-    const size = { height: 0, width: 0 };
+  const size = { height: 0, width: 0 };
 
+  try {
     const renderedElement = await getRenderedElement(renderContainer, element);
 
     if (isHtmlElement(renderedElement)) {
@@ -78,18 +80,14 @@ export async function getRenderedSize(
     }
 
     mainContainer.removeChild(renderContainer);
-
-    return size;
   } catch (error) {
     if (typeof console !== 'undefined') {
       // eslint-disable-next-line no-console
       console.error(error);
     }
-
-    return {
-      height: 0,
-      width: 0,
-    };
+  } finally {
+    // eslint-disable-next-line no-unsafe-finally
+    return size;
   }
 }
 

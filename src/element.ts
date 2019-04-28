@@ -16,7 +16,7 @@ import { RENDER_CONTAINER_ID } from './constants';
  * @param doc document to render into
  * @returns the main container that all future containers will render into
  */
-export function getMainContainer(doc: HTMLDocument): HTMLDivElement {
+export function getMainContainer(doc: HTMLDocument) {
   const container = doc.createElement('div');
 
   container.id = RENDER_CONTAINER_ID;
