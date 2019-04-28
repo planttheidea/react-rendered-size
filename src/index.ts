@@ -11,7 +11,11 @@ import {
   getMainContainer,
   getNewContainer,
   getRenderedElement,
+  isHtmlElement,
 } from './element';
+
+// types
+import { ContainerOptions, Size } from './types';
 
 let mainContainer: HTMLDivElement;
 
@@ -26,11 +30,11 @@ let mainContainer: HTMLDivElement;
  * @param {Object} [containerOptions={}] additional options for generating the container
  * @returns {{height: number, width: number}} the size of the rendered ReactElement
  */
-export const getRenderedSize = (
+export async function getRenderedSize(
   element: ReactElement<any>,
   containerWidth?: number | string,
-  containerOptions: ReactRenderedSize.ContainerOptions = {},
-): Promise<ReactRenderedSize.Size> => {
+  containerOptions: ContainerOptions = {},
+): Promise<Size> {
   const { container, type = DEFAULT_CONTAINER_ELEMENT } = containerOptions;
 
   let { doc } = containerOptions;
@@ -63,38 +67,46 @@ export const getRenderedSize = (
 
   mainContainer.appendChild(renderContainer);
 
-  return getRenderedElement(renderContainer, element)
-    .catch((error) => {
-      if (typeof console !== 'undefined') {
-        // eslint-disable-next-line no-console
-        console.error(error);
-      }
+  try {
+    const size = { height: 0, width: 0 };
 
-      return {
-        offsetHeight: 0,
-        offsetWidth: 0,
-      };
-    })
-    .then((renderedElement: HTMLElement | null) => {
-      const size = {
-        height: renderedElement ? renderedElement.offsetHeight : 0,
-        width: renderedElement ? renderedElement.offsetWidth : 0,
-      };
+    const renderedElement = await getRenderedElement(renderContainer, element);
 
-      mainContainer.removeChild(renderContainer);
+    if (isHtmlElement(renderedElement)) {
+      size.height = renderedElement.offsetHeight;
+      size.width = renderedElement.offsetWidth;
+    }
 
-      return size;
-    });
-};
+    mainContainer.removeChild(renderContainer);
 
-export const createGetRenderedValue = (value: keyof ReactRenderedSize.Size) => (
-  element: ReactElement<any>,
-  containerWidth?: number | string,
-  containerOptions: ReactRenderedSize.ContainerOptions = {},
-): Promise<number> =>
-  getRenderedSize(element, containerWidth, containerOptions).then(
-    (size: ReactRenderedSize.Size) => size[value],
-  );
+    return size;
+  } catch (error) {
+    if (typeof console !== 'undefined') {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+
+    return {
+      height: 0,
+      width: 0,
+    };
+  }
+}
+
+export const createGetRenderedValue = (value: keyof Size) =>
+  async function getRenderedValue(
+    element: ReactElement<any>,
+    containerWidth?: number | string,
+    containerOptions: ContainerOptions = {},
+  ): Promise<number> {
+    const size = await getRenderedSize(
+      element,
+      containerWidth,
+      containerOptions,
+    );
+
+    return size[value];
+  };
 
 /**
  * @function getRenderedHeight

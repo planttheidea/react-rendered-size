@@ -1,7 +1,7 @@
 /* globals HTMLElement,HTMLDocument */
 
 // external dependencies
-import { findDOMNode, render } from 'react-dom';
+import * as ReactDOM from 'react-dom';
 
 // constants
 import { ReactElement } from 'react';
@@ -16,7 +16,7 @@ import { RENDER_CONTAINER_ID } from './constants';
  * @param doc document to render into
  * @returns the main container that all future containers will render into
  */
-export const getMainContainer = (doc: HTMLDocument): HTMLDivElement => {
+export function getMainContainer(doc: HTMLDocument): HTMLDivElement {
   const container = doc.createElement('div');
 
   container.id = RENDER_CONTAINER_ID;
@@ -27,7 +27,7 @@ export const getMainContainer = (doc: HTMLDocument): HTMLDivElement => {
   container.style.visibility = 'hidden';
 
   return container;
-};
+}
 
 /**
  * @function getNewContainer
@@ -41,12 +41,12 @@ export const getMainContainer = (doc: HTMLDocument): HTMLDivElement => {
  * @param width the width to assign to the container
  * @returns the new container element
  */
-export const getNewContainer = (
+export function getNewContainer(
   doc: HTMLDocument,
   type: string,
   passedContainer: Element,
   width: number | string,
-): Element => {
+): Element {
   if (passedContainer) {
     return passedContainer;
   }
@@ -56,7 +56,7 @@ export const getNewContainer = (
   container.style.width = typeof width === 'number' ? `${width}px` : width;
 
   return container;
-};
+}
 
 /**
  * @function isElement
@@ -80,15 +80,15 @@ export const isHtmlElement = (object: any): object is HTMLElement =>
  * @param element the element to render into the container
  * @returns the ReactElement rendered as a DOM element
  */
-export const getRenderedElement = (
+export async function getRenderedElement(
   container: Element,
   element: ReactElement<any>,
-): Promise<HTMLElement> =>
-  // @ts-ignore
-  new Promise(resolve => render(element, container, resolve)).then(() => {
-    if (!isHtmlElement(container.firstChild)) {
-      return null;
-    }
-
-    return findDOMNode(container.firstChild);
+): Promise<Element | Text> {
+  await new Promise((resolve) => {
+    ReactDOM.render(element, container, resolve);
   });
+
+  return isHtmlElement(container.firstChild)
+    ? ReactDOM.findDOMNode(container.firstChild)
+    : null;
+}

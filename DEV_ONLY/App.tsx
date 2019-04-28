@@ -62,7 +62,7 @@ const Foo = ({
   style: object;
 }) => <Bar item={item} style={style} />;
 
-class App extends Component<Props, any> {
+class App extends Component<Props, State> {
   state: State = {
     sizes: [],
   };
@@ -87,7 +87,7 @@ class App extends Component<Props, any> {
 
     getRenderedSize(this.rowRenderer({ index }), width).then((size) => {
       // eslint-disable-next-line no-shadow
-      this.setState(({ sizes }: State) => {
+      this.setState(({ sizes }) => {
         // eslint-disable-next-line no-param-reassign
         sizes[index] = size.height;
 
